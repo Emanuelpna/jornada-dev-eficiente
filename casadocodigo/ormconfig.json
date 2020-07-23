@@ -5,6 +5,6 @@
     "username": "root",
     "password": "Qm40mdzUMoaC!",
     "database": "casadocodigo",
-    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "entities": ["dist/**/shared/*.entity{.ts,.js}"],
     "synchronize": true
 }
