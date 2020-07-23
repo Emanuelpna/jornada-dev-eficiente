@@ -1,0 +1,10 @@
+{
+    "type": "mysql",
+    "host": "127.0.0.1",
+    "port": "/var/run/mysqld/mysqld.sock",
+    "username": "root",
+    "password": "Qm40mdzUMoaC!",
+    "database": "casadocodigo",
+    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "synchronize": true
+}
