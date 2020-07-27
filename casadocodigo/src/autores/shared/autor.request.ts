@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, Length } from 'class-validator';
+import { IsEmail, IsNotEmpty, Length, Validate } from 'class-validator';
+import { UniqueEmail } from './UniqueEmail';
 
 export class NovoAutorRequest {
   @IsNotEmpty()
@@ -6,6 +7,7 @@ export class NovoAutorRequest {
 
   @IsNotEmpty()
   @IsEmail()
+  @Validate(UniqueEmail)
   email: string;
 
   @IsNotEmpty()

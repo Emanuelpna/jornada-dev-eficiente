@@ -19,7 +19,7 @@ export class AutoresController {
   async getAutores(): Promise<Autor[]> {
     const autores = await this.autorRepository.find();
 
-    return autores.map(autor => autor.toModel());
+    return autores.map(autor => autor?.toModel());
   }
 
   // 1
@@ -27,7 +27,7 @@ export class AutoresController {
   async getAutor(@Param('id') id: number): Promise<Autor> {
     const autor = await this.autorRepository.findOne(id);
 
-    return autor.toModel();
+    return autor?.toModel();
   }
 
   // 2
@@ -38,7 +38,6 @@ export class AutoresController {
       novoAutor.email,
       novoAutor.descricao,
     );
-    await novoAutorValidado.checkEmailIsUnique(this.autorRepository);
 
     const autorSalvado = await this.autorRepository.save(
       novoAutorValidado.toEntity(),
