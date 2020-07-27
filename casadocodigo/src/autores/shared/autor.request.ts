@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, Length } from 'class-validator';
 
-export class AutorRequest {
+export class NovoAutorRequest {
   @IsNotEmpty()
   nome: string;
 

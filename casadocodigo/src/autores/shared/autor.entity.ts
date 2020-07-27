@@ -1,9 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 import { Autor } from './autor';
 
 @Entity()
-export default class AutorEntity extends BaseEntity {
+export default class AutorEntity  {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -32,7 +32,6 @@ export default class AutorEntity extends BaseEntity {
   dataCriado: Date;
 
   constructor(nome: string, email: string, descricao: string) {
-    super();
     this.nome = nome;
     this.email = email;
     this.descricao = descricao;
