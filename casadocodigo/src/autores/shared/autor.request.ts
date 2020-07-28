@@ -1,5 +1,7 @@
 import { IsEmail, IsNotEmpty, Length, Validate } from 'class-validator';
-import { UniqueEmail } from './UniqueEmail';
+
+import { IsUnique } from 'src/validator/IsUnique';
+import AutorEntity from './autor.entity';
 
 export class NovoAutorRequest {
   @IsNotEmpty()
@@ -7,7 +9,7 @@ export class NovoAutorRequest {
 
   @IsNotEmpty()
   @IsEmail()
-  @Validate(UniqueEmail)
+  @Validate(IsUnique, [AutorEntity, 'email'])
   email: string;
 
   @IsNotEmpty()
