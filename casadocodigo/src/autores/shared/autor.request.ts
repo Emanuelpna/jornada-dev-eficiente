@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, Length, Validate } from 'class-validator';
 
 import { IsUnique } from 'src/validator/IsUnique';
-import AutorEntity from './autor.entity';
+import { AutorEntity } from './autor.entity';
 
 export class NovoAutorRequest {
   @IsNotEmpty()

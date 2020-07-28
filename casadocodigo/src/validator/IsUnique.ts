@@ -38,8 +38,8 @@ export class IsUnique implements ValidatorConstraintInterface {
   }
 
   defaultMessage(validationArguments: ValidationArguments): string {
-    const columnName: string = validationArguments.constraints[1];
+    const validationProps: ValidationProps = validationArguments.constraints[0];
 
-    return `${columnName} precisa ser único`;
+    return `${validationProps.ColumnName} precisa ser único`;
   }
 }

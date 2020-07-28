@@ -2,7 +2,7 @@ import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import AutorEntity from './shared/autor.entity';
+import { AutorEntity } from './shared/autor.entity';
 import { NovoAutorRequest } from './shared/autor.request';
 
 // Carga Intrínseca = 2 (AutorEntity, NovoAutorRequest)
@@ -38,9 +38,7 @@ export class AutoresController {
       novoAutor.descricao,
     );
 
-    const autorSalvado = await this.autorRepository.save(
-      novoAutorValidado,
-    );
+    const autorSalvado = await this.autorRepository.save(novoAutorValidado);
 
     return autorSalvado;
   }
