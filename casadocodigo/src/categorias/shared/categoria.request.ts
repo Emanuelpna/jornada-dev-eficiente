@@ -5,6 +5,6 @@ import { CategoriaEntity } from './categoria.entity';
 
 export class NovaCategoriaRequest {
   @IsNotEmpty()
-  @Validate(IsUnique, [CategoriaEntity, 'nome'])
+  @Validate(IsUnique, [{ Entity: CategoriaEntity, ColumnName: 'nome' }])
   nome: string;
 }

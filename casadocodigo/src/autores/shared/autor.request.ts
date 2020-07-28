@@ -9,7 +9,7 @@ export class NovoAutorRequest {
 
   @IsNotEmpty()
   @IsEmail()
-  @Validate(IsUnique, [AutorEntity, 'email'])
+  @Validate(IsUnique, [{ Entity: AutorEntity, ColumnName: 'email' }])
   email: string;
 
   @IsNotEmpty()
