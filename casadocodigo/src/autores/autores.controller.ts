@@ -2,11 +2,10 @@ import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Autor } from './shared/autor';
 import AutorEntity from './shared/autor.entity';
 import { NovoAutorRequest } from './shared/autor.request';
 
-// Carga Intrínseca = 2 (Autor, NovoAutorRequest)
+// Carga Intrínseca = 2 (AutorEntity, NovoAutorRequest)
 @Controller('autores')
 export class AutoresController {
   constructor(
@@ -16,33 +15,33 @@ export class AutoresController {
 
   // 1
   @Get()
-  async getAutores(): Promise<Autor[]> {
+  async getAutores(): Promise<AutorEntity[]> {
     const autores = await this.autorRepository.find();
 
-    return autores.map(autor => autor?.toModel());
+    return autores;
   }
 
   // 1
   @Get(':id')
-  async getAutor(@Param('id') id: number): Promise<Autor> {
+  async getAutor(@Param('id') id: number): Promise<AutorEntity> {
     const autor = await this.autorRepository.findOne(id);
 
-    return autor?.toModel();
+    return autor;
   }
 
   // 2
   @Post()
-  async saveAutor(@Body() novoAutor: NovoAutorRequest): Promise<Autor> {
-    const novoAutorValidado = new Autor(
+  async saveAutor(@Body() novoAutor: NovoAutorRequest): Promise<AutorEntity> {
+    const novoAutorValidado = new AutorEntity(
       novoAutor.nome,
       novoAutor.email,
       novoAutor.descricao,
     );
 
     const autorSalvado = await this.autorRepository.save(
-      novoAutorValidado.toEntity(),
+      novoAutorValidado,
     );
 
-    return autorSalvado.toModel();
+    return autorSalvado;
   }
 }
