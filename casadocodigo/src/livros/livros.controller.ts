@@ -1,39 +1,29 @@
-import { Repository } from 'typeorm';
+import { Repository, getManager, EntityManager } from 'typeorm';
 import { Controller, Post, Body } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import NovoLivroRequest from './shared/livro.request';
 import { LivroEntity } from './shared/livro.entity';
-import { CategoriaEntity } from 'src/categorias/shared/categoria.entity';
-import { AutorEntity } from 'src/autores/shared/autor.entity';
+import NovoLivroRequest from './shared/livro.request';
+import { LivroBuilder } from './shared/livro.builder';
 
 @Controller('livros')
 export class LivrosController {
+  private readonly entityManager: EntityManager;
+
   constructor(
-    @InjectRepository(CategoriaEntity)
-    private readonly categoriaRepository: Repository<CategoriaEntity>,
-
-    @InjectRepository(AutorEntity)
-    private readonly autorRepository: Repository<AutorEntity>,
-
     @InjectRepository(LivroEntity)
     private readonly livroRepository: Repository<LivroEntity>,
-  ) {}
+  ) {
+    this.entityManager = getManager();
+  }
 
   @Post()
   async saveLivro(@Body() novoLivro: NovoLivroRequest): Promise<LivroEntity> {
-    console.log('novoLivro :>> ', novoLivro);
-
-    const categoria = await this.categoriaRepository.findOneOrFail(
-      novoLivro.categoriaID,
+    const livroBuilder = new LivroBuilder();
+    const livro = await livroBuilder.entityFromRequest(
+      novoLivro,
+      this.entityManager,
     );
-
-    const autor = await this.autorRepository.findOneOrFail(novoLivro.autorID);
-
-    const livro = new LivroEntity();
-    livro.fromRequest(novoLivro, categoria, autor);
-
-    console.log('livro :>> ', livro);
 
     const livroSalvado = await this.livroRepository.save(livro);
 

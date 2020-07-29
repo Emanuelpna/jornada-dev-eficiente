@@ -3,7 +3,12 @@ import {
   ValidatorConstraintInterface,
   ValidationArguments,
 } from 'class-validator';
-import { getManager, EntityManager } from 'typeorm';
+import { getManager, EntityManager, ObjectType } from 'typeorm';
+
+interface ValidationProps {
+  Entity: ObjectType<unknown>;
+  ColumnName: string;
+}
 
 @ValidatorConstraint({ name: 'IsValidID', async: true })
 export class IsValidID implements ValidatorConstraintInterface {
@@ -17,7 +22,9 @@ export class IsValidID implements ValidatorConstraintInterface {
     value: unknown,
     validationArguments: ValidationArguments,
   ): Promise<boolean> {
-    const Entity = validationArguments.constraints[0];
+    const validationProps: ValidationProps = validationArguments.constraints[0];
+
+    const { Entity } = validationProps;
 
     const autorComMesmoNome = await this.entityManager.findOne(Entity, {
       id: value,
@@ -31,8 +38,8 @@ export class IsValidID implements ValidatorConstraintInterface {
   }
 
   defaultMessage(validationArguments: ValidationArguments): string {
-    const columnName: string = validationArguments.constraints[1];
+    const validationProps: ValidationProps = validationArguments.constraints[0];
 
-    return `Não foi encontrado nenhum registro para ${columnName}`;
+    return `Não foi encontrado nenhum registro para ${validationProps.ColumnName}`;
   }
 }

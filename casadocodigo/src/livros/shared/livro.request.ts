@@ -4,6 +4,7 @@ import {
   Length,
   Min,
   IsDateString,
+  IsPositive,
 } from 'class-validator';
 
 import { LivroEntity } from './livro.entity';
@@ -12,7 +13,7 @@ import { CategoriaEntity } from 'src/categorias/shared/categoria.entity';
 
 import { IsUnique } from 'src/validator/IsUnique';
 import { IsValidID } from 'src/validator/IsValidID';
-import { DateIsFuture } from 'src/validator/DateIsFuture';
+import { IsFuture } from 'src/validator/IsFuture';
 
 export default class NovoLivroRequest {
   @IsNotEmpty()
@@ -23,28 +24,31 @@ export default class NovoLivroRequest {
   @Length(1, 500)
   resumo: string;
 
+  @IsNotEmpty()
   sumario: string;
 
   @IsNotEmpty()
+  @IsPositive()
   @Min(20)
   preco: number;
 
   @IsNotEmpty()
+  @IsPositive()
   @Min(100)
   numeroPaginas: number;
 
   @IsNotEmpty()
-  isbn: number;
+  isbn: string;
 
   @IsDateString()
-  @Validate(DateIsFuture)
+  @Validate(IsFuture)
   dataPublicacao: Date;
 
   @IsNotEmpty()
-  @Validate(IsValidID, [CategoriaEntity, 'CategoriaID'])
+  @Validate(IsValidID, [{ Entity: CategoriaEntity, ColumnName: 'CategoriaID' }])
   categoriaID: number;
 
   @IsNotEmpty()
-  @Validate(IsValidID, [AutorEntity, 'AutorID'])
+  @Validate(IsValidID, [{ Entity: AutorEntity, ColumnName: 'AutorID' }])
   autorID: number;
 }

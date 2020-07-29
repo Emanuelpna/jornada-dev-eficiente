@@ -3,8 +3,8 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 
-@ValidatorConstraint({ name: 'DateIsFuture', async: false })
-export class DateIsFuture implements ValidatorConstraintInterface {
+@ValidatorConstraint({ name: 'IsFuture', async: false })
+export class IsFuture implements ValidatorConstraintInterface {
   validate(value: string): boolean {
     const data = new Date(value);
 

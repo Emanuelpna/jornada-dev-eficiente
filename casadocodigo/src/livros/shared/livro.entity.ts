@@ -3,13 +3,12 @@ import {
   Column,
   PrimaryGeneratedColumn,
   Unique,
-  OneToOne,
+  ManyToOne,
   JoinColumn,
 } from 'typeorm';
 
-import { CategoriaEntity } from 'src/categorias/shared/categoria.entity';
 import { AutorEntity } from 'src/autores/shared/autor.entity';
-import NovoLivroRequest from './livro.request';
+import { CategoriaEntity } from 'src/categorias/shared/categoria.entity';
 
 @Entity()
 @Unique(['titulo', 'isbn'])
@@ -44,34 +43,18 @@ export class LivroEntity {
   @Column({
     nullable: false,
   })
-  isbn: number;
+  isbn: string;
 
   @Column({
     nullable: false,
   })
   dataPublicacao: Date;
 
-  @OneToOne(_type => CategoriaEntity, { nullable: false })
+  @ManyToOne(_type => CategoriaEntity, { nullable: false })
   @JoinColumn()
   categoria: CategoriaEntity;
 
-  @OneToOne(_type => AutorEntity, { nullable: false })
+  @ManyToOne(_type => AutorEntity, { nullable: false })
   @JoinColumn()
   autor: AutorEntity;
-
-  fromRequest(
-    novoLivro: NovoLivroRequest,
-    categoria: CategoriaEntity,
-    autor: AutorEntity,
-  ): void {
-    this.titulo = novoLivro.titulo;
-    this.resumo = novoLivro.resumo;
-    this.sumario = novoLivro.sumario;
-    this.preco = novoLivro.preco;
-    this.numeroPaginas = novoLivro.numeroPaginas;
-    this.isbn = novoLivro.isbn;
-    this.dataPublicacao = novoLivro.dataPublicacao;
-    this.categoria = categoria;
-    this.autor = autor;
-  }
 }
