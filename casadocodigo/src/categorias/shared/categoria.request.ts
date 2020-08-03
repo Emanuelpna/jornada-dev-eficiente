@@ -1,10 +1,10 @@
 import { IsNotEmpty, Validate } from 'class-validator';
 
 import { IsUnique } from 'src/validator/IsUnique';
-import { CategoriaEntity } from './categoria.entity';
+import { Categoria } from './categoria.entity';
 
 export class NovaCategoriaRequest {
   @IsNotEmpty()
-  @Validate(IsUnique, [{ Entity: CategoriaEntity, ColumnName: 'nome' }])
+  @Validate(IsUnique, [{ Entity: Categoria, ColumnName: 'nome' }])
   nome: string;
 }

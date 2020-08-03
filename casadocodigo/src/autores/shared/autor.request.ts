@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, Length, Validate } from 'class-validator';
 
 import { IsUnique } from 'src/validator/IsUnique';
-import { AutorEntity } from './autor.entity';
+import { Autor } from './autor.entity';
 
 export class NovoAutorRequest {
   @IsNotEmpty()
@@ -9,16 +9,10 @@ export class NovoAutorRequest {
 
   @IsNotEmpty()
   @IsEmail()
-  @Validate(IsUnique, [{ Entity: AutorEntity, ColumnName: 'email' }])
+  @Validate(IsUnique, [{ Entity: Autor, ColumnName: 'email' }])
   email: string;
 
   @IsNotEmpty()
   @Length(1, 400)
   descricao: string;
-
-  constructor(nome: string, email: string, descricao: string) {
-    this.nome = nome;
-    this.email = email;
-    this.descricao = descricao;
-  }
 }

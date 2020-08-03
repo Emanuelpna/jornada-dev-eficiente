@@ -7,12 +7,12 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import { AutorEntity } from 'src/autores/shared/autor.entity';
-import { CategoriaEntity } from 'src/categorias/shared/categoria.entity';
+import { Autor } from 'src/autores/shared/autor.entity';
+import { Categoria } from 'src/categorias/shared/categoria.entity';
 
 @Entity()
 @Unique(['titulo', 'isbn'])
-export class LivroEntity {
+export class Livro {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -27,7 +27,7 @@ export class LivroEntity {
   })
   resumo: string;
 
-  @Column()
+  @Column("text")
   sumario: string;
 
   @Column({
@@ -50,11 +50,11 @@ export class LivroEntity {
   })
   dataPublicacao: Date;
 
-  @ManyToOne(_type => CategoriaEntity, { nullable: false })
+  @ManyToOne(_type => Categoria, { nullable: false })
   @JoinColumn()
-  categoria: CategoriaEntity;
+  categoria: Categoria;
 
-  @ManyToOne(_type => AutorEntity, { nullable: false })
+  @ManyToOne(_type => Autor, { nullable: false })
   @JoinColumn()
-  autor: AutorEntity;
+  autor: Autor;
 }

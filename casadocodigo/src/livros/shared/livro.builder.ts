@@ -1,18 +1,21 @@
+import { strict as assert } from 'assert';
 import { EntityManager } from 'typeorm';
-const assert = require('assert').strict;
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-import { LivroEntity } from './livro.entity';
-import NovoLivroRequest from './livro.request';
-import { AutorEntity } from 'src/autores/shared/autor.entity';
-import { CategoriaEntity } from 'src/categorias/shared/categoria.entity';
+import { Livro } from './livro.entity';
+import { NovoLivroRequest } from './livro.request';
+import { Autor } from 'src/autores/shared/autor.entity';
+import { Categoria } from 'src/categorias/shared/categoria.entity';
 
 export class LivroBuilder {
-  async entityFromRequest(
+  async modelFromRequest(
     novoLivro: NovoLivroRequest,
     entityManager: EntityManager,
-  ): Promise<LivroEntity> {
-    const categoria = await entityManager.findOne(CategoriaEntity, novoLivro.categoriaID);
+  ): Promise<Livro> {
+    const categoria = await entityManager.findOne(
+      Categoria,
+      novoLivro.categoriaID,
+    );
 
     assert(
       categoria !== undefined,
@@ -26,7 +29,7 @@ export class LivroBuilder {
       ),
     );
 
-    const autor = await entityManager.findOne(AutorEntity, novoLivro.autorID);
+    const autor = await entityManager.findOne(Autor, novoLivro.autorID);
 
     assert(
       autor !== undefined,
@@ -42,7 +45,7 @@ export class LivroBuilder {
       ),
     );
 
-    const livro = new LivroEntity();
+    const livro = new Livro();
 
     livro.titulo = novoLivro.titulo;
     livro.resumo = novoLivro.resumo;

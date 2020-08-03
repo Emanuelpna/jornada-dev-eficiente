@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AutoresController } from './autores.controller';
-import { AutorEntity } from './shared/autor.entity';
+import { Autor } from './shared/autor.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([AutorEntity])],
+  imports: [TypeOrmModule.forFeature([Autor])],
   controllers: [AutoresController],
 })
 export class AutoresModule {}

@@ -7,17 +7,17 @@ import {
   IsPositive,
 } from 'class-validator';
 
-import { LivroEntity } from './livro.entity';
-import { AutorEntity } from 'src/autores/shared/autor.entity';
-import { CategoriaEntity } from 'src/categorias/shared/categoria.entity';
+import { Livro } from './livro.entity';
+import { Autor } from 'src/autores/shared/autor.entity';
+import { Categoria } from 'src/categorias/shared/categoria.entity';
 
 import { IsUnique } from 'src/validator/IsUnique';
 import { IsValidID } from 'src/validator/IsValidID';
 import { IsFuture } from 'src/validator/IsFuture';
 
-export default class NovoLivroRequest {
+export class NovoLivroRequest {
   @IsNotEmpty()
-  @Validate(IsUnique, [{ Entity: LivroEntity, ColumnName: 'titulo' }])
+  @Validate(IsUnique, [{ Entity: Livro, ColumnName: 'titulo' }])
   titulo: string;
 
   @IsNotEmpty()
@@ -45,10 +45,10 @@ export default class NovoLivroRequest {
   dataPublicacao: Date;
 
   @IsNotEmpty()
-  @Validate(IsValidID, [{ Entity: CategoriaEntity, ColumnName: 'CategoriaID' }])
+  @Validate(IsValidID, [{ Entity: Categoria, ColumnName: 'CategoriaID' }])
   categoriaID: number;
 
   @IsNotEmpty()
-  @Validate(IsValidID, [{ Entity: AutorEntity, ColumnName: 'AutorID' }])
+  @Validate(IsValidID, [{ Entity: Autor, ColumnName: 'AutorID' }])
   autorID: number;
 }
